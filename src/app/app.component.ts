@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TableroService } from './service/tablero.service';
+import { TableroService } from './services/tablero.service';
 
 @Component({
   selector: 'app-root',
