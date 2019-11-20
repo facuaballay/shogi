@@ -1,4 +1,10 @@
-<table>
+
+<!-- <div  class="row float-right" >  
+<ul>
+  <li></li>
+</ul>
+</div> -->
+<table >
     <th class="color text-center"></th>
     <th class="color text-center">0</th>
     <th class="color text-center ">1</th>
@@ -9,11 +15,11 @@
     <th class="color text-center">6</th>
     <th class="color text-center">7</th>
     <th class="color text-center">8</th>
+    
   
     <tbody>
       <tr class="" *ngFor="let f of matriz; let fila = index">
-        <!-- <td *ngFor="let c of matriz;let columna = index">{{matriz[fila][columna].nombre}} </td> -->
-        <th style="background:rgb(216, 159, 105)!important;border:none" class="color">{{ fila }}</th>
+        <th  class="color fondo">{{ fila }}</th>
   
         <td *ngFor="let c of matriz; let columna = index">
           <img class="imagen " [attr.src]="matriz[fila][columna]?.img" [alt]="matriz[fila][columna].nombre" /> {{ matriz[fila][columna].id }}

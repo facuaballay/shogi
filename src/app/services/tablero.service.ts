@@ -144,7 +144,9 @@ export class TableroService {
        else if(  contador >= 11 && contador <= 15 ){
           this.tablero[f][c]= {
             id:'', 
-            nombre: ''
+            nombre: '',
+            permiso:"",
+            img:""
           };                 
         //tablero del 11 y 15    
         }
@@ -185,7 +187,7 @@ export class TableroService {
       //tablero del 71 y 81    
       }
       else{
-        this.tablero[f][c]={id:"", nombre: ""};
+        this.tablero[f][c]={id:"", nombre: "",permiso:"",img:""};
         }
       contador++
       //total 81.

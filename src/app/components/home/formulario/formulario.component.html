@@ -1,15 +1,15 @@
 <form class="row"  #Formulario (ngSubmit)="onMover(ficha.value, lugar.value );" >
     <div class="form-group">
-      <input  class="form-control col-md-12 mr-2 " maxlength="2"  #ficha  required type="text" digitOnly placeholder="ID ficha" >
+      <input  class="form-control col-md-12 mr-2 col-sm-6 " maxlength="2"  #ficha  required type="text" digitOnly placeholder="ID ficha" >
       <small class="form-text text-muted">Escriba El ID de la ficha</small>
   
     </div>
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-3 col-sm-3">
        <input  class="form-control  mr-2" #lugar  required type="text" digitOnly placeholder="Lugar" maxlength="2" >
        <small class="form-text text-muted">Primero <b> Fila</b> y Despues <b>Columna</b> </small>
   
       </div> 
-      <div class="form-group">
+      <div class="form-group ">
         <button class="btn btn-outline-primary" type="submit">Mover</button>
       </div>
   </form> 
