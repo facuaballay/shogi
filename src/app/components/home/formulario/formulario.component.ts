@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TableroService } from '../../../services/tablero.service';
 import { HelperFichasService } from '../../../services/helper/helper-fichas.service';
 import swal from 'sweetalert';
+import { HelperPromocionesService } from '../../../services/helper/helper-promociones.service';
+
+
 
 
 @Component({
@@ -18,17 +21,25 @@ export class FormularioComponent implements OnInit {
   filaEliminar: number;
   columnaEliminar: number;
   matriz: Array<any>;
+  
 
   jugador :string;
+  promocionado;
 
   constructor(public _TableroService: TableroService,
-              private _HelperFichaService: HelperFichasService) {
+              private _HelperFichaService: HelperFichasService,
+              public _HelperPromocionService:HelperPromocionesService) {
+    
     this.matriz = _TableroService.CrearTablero();
     console.log(this.matriz)
   }
 
   ngOnInit() {
     this.jugador = 'jugador1';
+    
+
+  
+  
   }
 //========================================= lugar ============================================//
   onMover(ficha: string, lugar: string) {
@@ -41,20 +52,21 @@ export class FormularioComponent implements OnInit {
       switch (this.jugador) {
         case (this.jugador = "jugador1"):
           this.jugador = "jugador2";
-          swal("Turno del Jugador 2",'','success');
-
+          
           break;
         case (this.jugador = "jugador2"):
           this.jugador = "jugador1";
-          swal("turno del jugador 1",'','success');
+          
           break;
       }
     } else {
-      swal('Movimiento No Permitido','','error')
+     swal('Movimiento No Permitido','','error')
     }
   }
-
-  //verifica que se pueda mover en la direccion solicitada
+//============================================================================================================//
+//Verifica que se pueda mover en la direccion solicitada
+//============================================================================================================//
+  
   sePuede(ficha: string, lugar: string){
     //lugares futuros
     this.fila = Number(lugar.substr(0, 1));
@@ -85,13 +97,22 @@ export class FormularioComponent implements OnInit {
         
         case "Alfil":
         return this._HelperFichaService.Alfil(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+
+        case "AlfilPromocionado":
+        return this._HelperFichaService.AlfilPromocionado(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
         
+        case "Torre":
+        return this._HelperFichaService.Torre(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        
+        case "TorrePromocionada":
+        return this._HelperFichaService.TorrePromocionada(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
       }
     }
     return false;
   }
-
-  //buscar la ficha comprueba si existe y setea variables
+//============================================================================================================//
+//Busca si existe la ficha
+//============================================================================================================//
   onFicha(ficha: string): boolean {
     for (var f = 0; f < 9; f++) {
       for (var c = 0; c < 9; c++) {
@@ -106,10 +127,11 @@ export class FormularioComponent implements OnInit {
     }
     return false;
   }
-  
-  //mueve el lugar
+//============================================================================================================//
+//Mueve Lugar
+//============================================================================================================//
   onLugar() {
-    //Peon
+  
     switch(this.ficha["nombre"]){
       case "Peon":
         this.peon()
@@ -131,106 +153,91 @@ export class FormularioComponent implements OnInit {
       break;
       case "Alfil":
         this.Alfil();
-        break;    
-    }
-    
+        break;
+      case "AlfilPromocionado":
+        this.Alfil();
+        break;
+      case "Torre":
+        this.Torre();
+        break;
+      case "TorrePromocionada":
+       this.Torre();
+      break;         
+    } 
   }
   
   //elimina la ficha
   onEliminar(): void {
     this.matriz[this.filaEliminar][this.columnaEliminar] = { id: "", nombre: "" };
   }
- //============================================ fin logica lugar=============================================//
-//============================================= Promocion ===================================================//
+ //============================================ fin logica lugar==============================================//
+
+//========================================== Promocion y asignacion ==========================================//
 //============================================= logica fichas  ===============================================//
-//peon  
+
+//============================================================================================================//
+//                                          Peon
+//============================================================================================================//
+
 peon(){
-    this.matriz[this.fila][this.columna] = this.ficha;
+  this.matriz[this.fila][this.columna] = this.ficha;
+  this._HelperPromocionService.PeonPromocion(this.ficha,this.fila);
 
-    if (this.ficha["permiso"] === "jugador1") {
-      if (this.fila.valueOf() === 8) {
-        this.ficha["nombre"] = "G.Oro";
-        this.ficha["img"] = "assets/Fichas/Peon-promocionado.png";
-      }
-    }
-
-    if (this.ficha["permiso"] === "jugador2") {
-      if (this.fila.valueOf() === 0) {
-        this.ficha["nombre"] = "G.Oro";
-        this.ficha["img"] = "assets/Fichas/Peon-promocionado.png";
-      }
-    }
-  }
-  //general oro
-  GeneralOro(){
-    this.matriz[this.fila][this.columna] = this.ficha;
-  }
-  //general Plata
-  GeneralPlata(){
-    this.matriz[this.fila][this.columna] = this.ficha;
-
-    if (this.ficha["permiso"] === "jugador1") {
-      if (this.fila.valueOf() === 8) {
-        this.ficha["nombre"] = "G.Oro";
-        this.ficha["img"] = "assets/Fichas/Peon-promocionado.png";
-      }
-    }
-
-    if (this.ficha["permiso"] === "jugador2") {
-      if (this.fila.valueOf() === 0) {
-        this.ficha["nombre"] = "G.Oro";
-        this.ficha["img"] = "assets/Fichas/Peon-promocionado.png";
-      }
-    }
-  }
-  //lancero
-  Lancero(){
-    this.matriz[this.fila][this.columna] = this.ficha;
-    
-    
-    if (this.ficha["permiso"] === "jugador1") {
-      if (this.fila.valueOf() === 8) {
-        this.ficha["nombre"] = "G.Oro";
-        this.ficha["img"] = "assets/Fichas/Lancero-promocionado.png";
-      }
-    }
-    
-    if (this.ficha["permiso"] === "jugador2") {
-      if (this.fila.valueOf() === 0) {
-        this.ficha["nombre"] = "G.Oro";
-        this.ficha["img"] = "assets/Fichas/Lancero-promocionado.png";
-      }
-    }
-  }
-  //Caballo
-  Caballo(){
-    this.matriz[this.fila][this.columna] = this.ficha;
-    if (this.ficha["permiso"] === "jugador1") {
-      if (this.fila.valueOf() === 8 || this.fila.valueOf() === 7) {
-        this.ficha["nombre"] = "G.Oro";
-        this.ficha["img"] = "assets/Fichas/Lancero-promocionado.png";
-      }
-    }
-    
-    if (this.ficha["permiso"] === "jugador2") {
-      if (this.fila.valueOf() === 0 || this.fila.valueOf() === 1) {
-        this.ficha["nombre"] = "G.Oro";
-        this.ficha["img"] = "assets/Fichas/Lancero-promocionado.png";
-      }
-    }
-
-  }
-  Alfil(){
-    this.matriz[this.fila][this.columna] = this.ficha;
-  }
-
-
-
-  Rey(){
-    this.matriz[this.fila][this.columna] = this.ficha;
-    
-  }
+}
+//============================================================================================================//
+//                                      General De Oro
+//============================================================================================================//
+GeneralOro(){
+  this.matriz[this.fila][this.columna] = this.ficha;
+}
+//============================================================================================================//
+//                                      General De Plata
+//============================================================================================================//
+GeneralPlata(){
+  this.matriz[this.fila][this.columna] = this.ficha;
+  this._HelperPromocionService.GeneralPlataPromocion(this.ficha,this.fila);
+}
+//============================================================================================================//
+//                                            Lancero
+//============================================================================================================//
+Lancero(){
+  this.matriz[this.fila][this.columna] = this.ficha;
+  this._HelperPromocionService.LanceroPromocion(this.ficha,this.fila);
   
+}
+//============================================================================================================//
+//                                              Caballo
+//============================================================================================================//
+Caballo(){
+  this.matriz[this.fila][this.columna] = this.ficha;
+
+  this._HelperPromocionService.Caballo(this.ficha,this.fila);
+
+}
+//============================================================================================================//
+//                                              Alfil
+//============================================================================================================//
+Alfil(){
+  this.matriz[this.fila][this.columna] = this.ficha;
+  this._HelperPromocionService.AlfilPromocionado(this.ficha,this.fila);
+}
+//============================================================================================================//
+//                                               Rey
+//============================================================================================================//
+Rey(){
+  this.matriz[this.fila][this.columna] = this.ficha;
   
-  //========================================== fin logica fichas ====================================//
+}
+//============================================================================================================//
+//                                               Torre
+//============================================================================================================//
+
+Torre(){
+  this.matriz[this.fila][this.columna] = this.ficha;    
+  this._HelperPromocionService.TorrePromocionada(this.ficha,this.fila);
+
+}
+//========================================== fin logica fichas ====================================//
+
+
 }
