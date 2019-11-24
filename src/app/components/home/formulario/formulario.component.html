@@ -1,11 +1,49 @@
-<form class="row"  #Formulario (ngSubmit)="onMover(ficha.value, lugar.value );" >
+
+<div  class="row float-right jumbotron  "  >  
+
+  <div>
+    
+    <h4 *ngIf="jugador === 'jugador1'" >Jugador 1</h4>
+    <h4 *ngIf="jugador === 'jugador2'" >Jugador 2</h4>
+    <p>Piezas Capturadas</p>
+    <ul *ngIf="jugador === 'jugador1'" >
+      <li *ngFor="let jug1 of capjug1"> {{jug1.id}}-{{jug1.nombre}} </li>
+    </ul>
+    <ul *ngIf="jugador === 'jugador2'" >
+      <li *ngFor="let jug2 of capjug2"> {{jug2.id}}-{{jug2.nombre}} </li>
+    </ul>
+    <form ngNativeValidate class="row" #f="ngForm" (ngSubmit)="ReintroducirPiezas(fichanueva.value,nuevolugar.value ); " >
+      <div class="form-group">
+        <input  class="form-control  " maxlength="2"   #fichanueva ngModel name="idFicha"  type="text" digitOnly placeholder="ID ficha" required  >
+        <small class="form-text text-muted">Escriba El ID de la ficha</small>
+    
+      </div>
+        <div class="form-group ">
+         <input  class="form-control  " #nuevolugar ngModel name="colyfila"  type="text" digitOnly placeholder="Lugar" maxlength="2" required >
+         <small class="form-text text-muted">Primero <b> Fila</b> y Despues <b>Columna</b> </small>
+    
+        </div> 
+       
+        <div class="form-group   ">
+          <button class="btn btn-outline-primary ml-2 " type="submit">Mover</button>
+     
+        </div>
+      </form>  
+</div>
+
+
+</div>
+
+<app-tablero></app-tablero>
+<br>
+<form ngNativeValidate class="row" #f="ngForm" (ngSubmit)="onMover(ficha.value, lugar.value); f.reset();" >
     <div class="form-group col-md-3">
-      <input  class="form-control mr-2 " maxlength="2"  #ficha  required type="text" digitOnly placeholder="ID ficha" >
+      <input  class="form-control mr-2 " maxlength="2"   #ficha ngModel name="idFicha"  type="text" digitOnly placeholder="ID ficha" required  >
       <small class="form-text text-muted">Escriba El ID de la ficha</small>
   
     </div>
       <div class="form-group col-md-3">
-       <input  class="form-control  mr-2" #lugar  required type="text" digitOnly placeholder="Lugar" maxlength="2" >
+       <input  class="form-control  mr-2" #lugar ngModel name="colyfila"  type="text" digitOnly placeholder="Lugar" maxlength="2" required >
        <small class="form-text text-muted">Primero <b> Fila</b> y Despues <b>Columna</b> </small>
   
       </div> 

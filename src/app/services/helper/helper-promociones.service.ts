@@ -1,31 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Promociones } from '../../models/Promociones.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HelperPromocionesService {
 
-  constructor() { }
-
-
-
-PiezasJugador1 = {
-  Peonpromocionado:false,
-  Generalplatapromocionado: false,
-  Lanceropromocionado:false,
-  Caballopromocionado:false,
-  Alfilpromocionado : false,
-  Torrepromocionada:false
-}
-PiezasJugador2 = {
-  Peonpromocionado:false,
-  Generalplatapromocionado: false,
-  Lanceropromocionado:false,
-  Caballopromocionado:false,
-  Alfilpromocionado : false,
-  Torrepromocionada:false
-}
-
+  PiezasJugador1:any;
+  PiezasJugador2:any;
+  
+    constructor() { 
+  
+      this.PiezasJugador1 = new Promociones(false,false,false,false,false,false)
+      this.PiezasJugador2 = new Promociones(false,false,false,false,false,false)
+    }
+  
 
 
 //============================================================================================================//
@@ -295,6 +284,8 @@ if (ficha["permiso"] === "jugador1") {
        ficha["nombre"] = "G.Oro";
        ficha["img"] = "assets/Fichas/Lancero-promocionado.png";
 
+       console.log(ficha)
+
   break; 
    
     case 7 :
@@ -335,7 +326,8 @@ if (ficha["permiso"] === "jugador1") {
           })
   
         }
-  break;    
+  break; 
+
   }      
  }
 //jugador 2    

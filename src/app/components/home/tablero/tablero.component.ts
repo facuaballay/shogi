@@ -9,6 +9,7 @@ import { TableroService } from '../../../services/tablero.service';
 export class TableroComponent implements OnInit {
 
   matriz :Array<any>;
+ 
 
   constructor(public _TableroService:TableroService) { 
 

@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TableroService } from '../../../services/tablero.service';
 import { HelperFichasService } from '../../../services/helper/helper-fichas.service';
 import swal from 'sweetalert';
 import { HelperPromocionesService } from '../../../services/helper/helper-promociones.service';
+
+
+
+import { ToastrService } from 'ngx-toastr';
+
 
 
 
@@ -18,47 +23,77 @@ export class FormularioComponent implements OnInit {
   ficha: any;
   fila: number;
   columna: number;
+  filaNueva: number;
+  columnaNueva: number;
   filaEliminar: number;
   columnaEliminar: number;
   matriz: Array<any>;
+
+  //
+  capjug1= new Array();
+  capjug2=new Array();
   
 
   jugador :string;
-  promocionado;
 
   constructor(public _TableroService: TableroService,
               private _HelperFichaService: HelperFichasService,
-              public _HelperPromocionService:HelperPromocionesService) {
+              public _HelperPromocionService:HelperPromocionesService,
+              private toastr: ToastrService
+              ) {
     
     this.matriz = _TableroService.CrearTablero();
     console.log(this.matriz)
   }
 
+
   ngOnInit() {
     this.jugador = 'jugador1';
     
-
+   
   
   
   }
+
+
+
 //========================================= lugar ============================================//
-  onMover(ficha: string, lugar: string) {
+//Mueve la Ficha 
+onMover(ficha: string, lugar: string,f) {
     //devuelve un true
     let sePuede = this.sePuede(ficha, lugar);
     if (sePuede) {
       this.onEliminar();
-      this.onLugar();
+      this.onPromocion();
 
+      
       switch (this.jugador) {
         case (this.jugador = "jugador1"):
           this.jugador = "jugador2";
-          
+          this.toastr.success('Turno Jugador 2', '', {
+            tapToDismiss:true,
+            closeButton:true,
+            positionClass: "toast-top-center",
+            timeOut:6000
+            
+          });
+           
+
           break;
         case (this.jugador = "jugador2"):
           this.jugador = "jugador1";
-          
+          this.toastr.success('Turno Jugador 1', '', {
+            tapToDismiss:true,
+            closeButton:true,
+            positionClass: "toast-top-center",
+            timeOut:6000    
+          });
           break;
-      }
+        
+        } 
+        console.log(this.capjug2 , 'capturadas jugador2')
+
+     console.log(this.capjug1 , 'capturadas jugador1')
     } else {
      swal('Movimiento No Permitido','','error')
     }
@@ -72,40 +107,40 @@ export class FormularioComponent implements OnInit {
     this.fila = Number(lugar.substr(0, 1));
     this.columna = Number(lugar.substr(1, 1));
     
-    //comprobacion si existe la fila  
+    //comprobacion si existe la ficha  
     let existe = this.onFicha(ficha);
-    //si existe que ficha es?
+    //si existe que ficha es? y como se mueve
     if(existe){
       switch (this.ficha.nombre){
         case "Peon":
-         return this._HelperFichaService.peon(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        return this._HelperFichaService.peon(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz, this.capjug1,this.capjug2);
     
         case "G.Oro":
-        return this._HelperFichaService.GeneralOro(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        return this._HelperFichaService.GeneralOro(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz,this.capjug1,this.capjug2);
         
         case "G.Plata":
-        return this._HelperFichaService.GeneralPlata(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        return this._HelperFichaService.GeneralPlata(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz,this.capjug1,this.capjug2);
         
         case "Lancero":
-        return this._HelperFichaService.Lancero(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        return this._HelperFichaService.Lancero(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz,this.capjug1,this.capjug2);
 
         case "Caballo":
-        return this._HelperFichaService.Caballo(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        return this._HelperFichaService.Caballo(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz,this.capjug1,this.capjug2);
 
         case "Rey":
-          return this._HelperFichaService.Rey(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+          return this._HelperFichaService.Rey(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz,this.capjug1,this.capjug2);
         
         case "Alfil":
-        return this._HelperFichaService.Alfil(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        return this._HelperFichaService.Alfil(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz,this.capjug1,this.capjug2);
 
         case "AlfilPromocionado":
-        return this._HelperFichaService.AlfilPromocionado(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        return this._HelperFichaService.AlfilPromocionado(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz,this.capjug1,this.capjug2);
         
         case "Torre":
-        return this._HelperFichaService.Torre(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        return this._HelperFichaService.Torre(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz,this.capjug1,this.capjug2);
         
         case "TorrePromocionada":
-        return this._HelperFichaService.TorrePromocionada(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador);
+        return this._HelperFichaService.TorrePromocionada(this.filaEliminar, this.columnaEliminar, this.fila, this.columna, this.jugador,this.matriz,this.capjug1,this.capjug2);
       }
     }
     return false;
@@ -120,7 +155,6 @@ export class FormularioComponent implements OnInit {
           this.filaEliminar = f;
           this.columnaEliminar = c;
           this.ficha = this.matriz[f][c];
-
           return true;
         }
       }
@@ -128,9 +162,9 @@ export class FormularioComponent implements OnInit {
     return false;
   }
 //============================================================================================================//
-//Mueve Lugar
+//Promocion y asignacion.
 //============================================================================================================//
-  onLugar() {
+  onPromocion() {
   
     switch(this.ficha["nombre"]){
       case "Peon":
@@ -165,10 +199,12 @@ export class FormularioComponent implements OnInit {
       break;         
     } 
   }
-  
-  //elimina la ficha
+ 
+//============================================================================================================//
+//Elimina la ficha
+//============================================================================================================//
   onEliminar(): void {
-    this.matriz[this.filaEliminar][this.columnaEliminar] = { id: "", nombre: "" };
+    this.matriz[this.filaEliminar][this.columnaEliminar] = { id: "", nombre: "", permiso: "", img:""};
   }
  //============================================ fin logica lugar==============================================//
 
@@ -233,11 +269,33 @@ Rey(){
 //============================================================================================================//
 
 Torre(){
-  this.matriz[this.fila][this.columna] = this.ficha;    
+  this.matriz[this.fila][this.columna] = this.ficha;
   this._HelperPromocionService.TorrePromocionada(this.ficha,this.fila);
 
 }
 //========================================== fin logica fichas ====================================//
+ReintroducirPiezas(fichanueva,nuevolugar){
+   //lugares futuros
+   this.filaNueva = Number(nuevolugar.substr(0, 1));
+   this.columnaNueva = Number(nuevolugar.substr(1, 1));
+   
+  for(let i of this.capjug1){
+    if(fichanueva === i.id){
+      
+    // if(i.permiso === 'jugador2'){
+    //     i.permiso ="jugador1"
+    // }else{
+    //     i.permiso = "jugador2"
+    // }
+    // if(this.matriz[this.filaNueva][this.columnaNueva].id === " "){
 
+    // }
+    console.log(this.matriz[this.filaNueva][this.columnaNueva])
+    
+
+    }
+  }
+ 
+}
 
 }

@@ -162,27 +162,27 @@ export class TableroService {
       else if(contador > 53 && contador < 63){
         this.tablero[f][c]= {
             id: this.fichas[fichasLugar].id, 
-            permiso: this.fichas[fichasLugar].permiso = "jugador2",
+            nombre: this.fichas[fichasLugar].nombre,
             img:this.fichas[fichasLugar].img,
-            nombre: this.fichas[fichasLugar--].nombre,
+            permiso: this.fichas[fichasLugar--].permiso = "jugador2"
           };
       //tablero del 53 y 63                        
       }
       else if(contador == 64 || contador === 70){
         this.tablero[f][c]= {
           id: this.fichas[fichasLugar].id, 
-          permiso: this.fichas[fichasLugar].permiso = "jugador2",
           img:this.fichas[fichasLugar].img,
-          nombre: this.fichas[fichasLugar--].nombre,
+          nombre: this.fichas[fichasLugar].nombre,
+          permiso: this.fichas[fichasLugar--].permiso = "jugador2"
          };
       //tablero del 64 y 70   
       }
       else if(contador > 71 && contador < 81){
         this.tablero[f][c]= {
           id: this.fichas[fichasLugar].id, 
-          permiso: this.fichas[fichasLugar].permiso = "jugador2",
+          nombre: this.fichas[fichasLugar].nombre,
           img:this.fichas[fichasLugar].img,
-          nombre: this.fichas[fichasLugar--].nombre
+          permiso: this.fichas[fichasLugar--].permiso = "jugador2"
          };
       //tablero del 71 y 81    
       }
