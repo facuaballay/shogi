@@ -48,7 +48,7 @@ PeonPromocion(ficha,fila){
               this.PiezasJugador1.Peonpromocionado = true;
              }
             }).catch(res=>{
-              console.log(res);
+              // console.log(res);
               return true;
             })
           }
@@ -72,7 +72,7 @@ PeonPromocion(ficha,fila){
               this.PiezasJugador1.Peonpromocionado = true;
              }
             }).catch(res=>{
-              console.log(res);
+              // console.log(res);
               return true;
             })
           }
@@ -105,7 +105,7 @@ PeonPromocion(ficha,fila){
             this.PiezasJugador2.Peonpromocionado = true;
            }
           }).catch(res=>{
-            console.log(res);
+            // console.log(res);
             return true;
           })
         }
@@ -128,7 +128,7 @@ PeonPromocion(ficha,fila){
                 this.PiezasJugador2.Peonpromocionado = true;
                }
               }).catch(res=>{
-                console.log(res);
+                // console.log(res);
                 return true;
               })
             }
@@ -207,7 +207,7 @@ GeneralPlataPromocion(ficha,fila){
     break;    
   }      
 }
-//jugador 2    
+  //jugador 2    
   if (ficha["permiso"] === "jugador2") {
     switch(fila.valueOf()){
       case 0 :
@@ -284,7 +284,7 @@ if (ficha["permiso"] === "jugador1") {
        ficha["nombre"] = "G.Oro";
        ficha["img"] = "assets/Fichas/Lancero-promocionado.png";
 
-       console.log(ficha)
+      //  console.log(ficha)
 
   break; 
    
@@ -330,7 +330,7 @@ if (ficha["permiso"] === "jugador1") {
 
   }      
  }
-//jugador 2    
+  //jugador 2    
 if (ficha["permiso"] === "jugador2") {
   switch(fila.valueOf()){
     case 0 :
@@ -731,9 +731,8 @@ TorrePromocionada(ficha,fila){
            }
           })
         }
-    break;
-    }  
-  }    
-}
-
+          break;
+      }  
+    }    
+  }
 }

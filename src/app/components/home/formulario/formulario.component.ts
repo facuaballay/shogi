@@ -43,14 +43,14 @@ export class FormularioComponent implements OnInit {
               ) {
     
     this.matriz = _TableroService.CrearTablero();
-    console.log(this.matriz)
+    // console.log(this.matriz)
   }
 
 
   ngOnInit() {
     this.jugador = 'jugador1';
+
     
-   
   
   
   }
@@ -91,9 +91,7 @@ onMover(ficha: string, lugar: string,f) {
           break;
         
         } 
-        console.log(this.capjug2 , 'capturadas jugador2')
-
-     console.log(this.capjug1 , 'capturadas jugador1')
+     
     } else {
      swal('Movimiento No Permitido','','error')
     }
@@ -273,29 +271,46 @@ Torre(){
   this._HelperPromocionService.TorrePromocionada(this.ficha,this.fila);
 
 }
-//========================================== fin logica fichas ====================================//
-ReintroducirPiezas(fichanueva,nuevolugar){
+//========================================== Fin Promocion fichas ====================================//
+ReintroducirPiezas(fichanueva:number,nuevolugar){
    //lugares futuros
    this.filaNueva = Number(nuevolugar.substr(0, 1));
    this.columnaNueva = Number(nuevolugar.substr(1, 1));
    
-  for(let i of this.capjug1){
-    if(fichanueva === i.id){
-      
-    // if(i.permiso === 'jugador2'){
-    //     i.permiso ="jugador1"
-    // }else{
-    //     i.permiso = "jugador2"
-    // }
-    // if(this.matriz[this.filaNueva][this.columnaNueva].id === " "){
-
-    // }
-    console.log(this.matriz[this.filaNueva][this.columnaNueva])
+ 
+   
+  for(let insertar of this.capjug1){
+    if(fichanueva === insertar.id ){
     
-
+      if(this.matriz[this.filaNueva][this.columnaNueva].id === "" && 
+      this.jugador === "jugador1" ){  
+        insertar.permiso = "jugador1";
+        this.matriz[this.filaNueva][this.columnaNueva] = insertar;
+        this.capjug1.splice(insertar,1);
+        // console.log(insertar);
+        swal('Ficha introducida correctamente','','success')
+      }
+      
+    }
+   
+  }
+  for(let insertar of this.capjug2){
+    if(fichanueva === insertar.id  && this.jugador === "jugador2"){
+      if(this.matriz[this.filaNueva][this.columnaNueva].id === "" ){
+        insertar.permiso = "jugador2";
+        this.matriz[this.filaNueva][this.columnaNueva] = insertar;
+        this.capjug2.splice(insertar,1);
+        
+       swal('Ficha introducida correctamente','','success')
+      }
+       }
+        
     }
   }
- 
-}
 
-}
+
+
+
+}  
+
+

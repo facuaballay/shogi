@@ -16,8 +16,13 @@
       <tr class="" *ngFor="let f of matriz; let fila = index">
         <th  class="color fondo">{{ fila }}</th>
   
-        <td *ngFor="let c of matriz; let columna = index">
-          <img class="imagen " [attr.src]="matriz[fila][columna]?.img" [alt]="matriz[fila][columna].nombre" /> {{ matriz[fila][columna].id }}
+        <td  *ngFor="let c of matriz; let columna = index">
+          
+          <img class="imagen" [ngClass]="{'miImagen':matriz[fila][columna].permiso === 'jugador1' }"
+          [attr.src]="matriz[fila][columna]?.img" [alt]="matriz[fila][columna].nombre" /> 
+          
+          {{ matriz[fila][columna].id }}
+        
         </td>
       </tr>
     </tbody>

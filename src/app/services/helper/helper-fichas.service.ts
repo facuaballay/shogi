@@ -34,6 +34,7 @@ peon(filaActual: number, columnaActual: number, filaFutura: number, columnaFutur
       if (filaFutura != filaActual - 1 || columnaFutura != columnaActual   ) {
         return false;
       } else {
+        // this._CapturarService.ReintroducirPiezas(ficha,null,filaFutura,columnaFutura,matriz);
         return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
 
       }
@@ -131,7 +132,7 @@ GeneralPlata(filaActual: number, columnaActual: number, filaFutura: number, colu
        }
       else if(columnaFutura == columnaActual  - 1 && filaFutura == filaActual - 1  
         ||  columnaFutura == columnaActual  + 1 && filaFutura == filaActual - 1 ){
-        console.log('a')
+       
         return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
 
       }
@@ -152,40 +153,30 @@ Lancero(filaActual: number, columnaActual: number, filaFutura: number, columnaFu
 
   switch(jugador) {
     case "jugador1":
-      //movimiento solo hacia delante 
-      if(filaFutura < filaActual  || columnaFutura != columnaActual
-          || filaFutura === 9 || filaFutura === filaActual){
-        return false;
-      } else {
-
-        if(matriz[filaFutura][columnaActual].permiso != 'jugador1'){
-          for (var f = filaActual + 1; f <= filaFutura; f++) {
-            if(matriz[f][columnaActual].id != "" && matriz[filaFutura][columnaActual].permiso != 'jugador2'){
-              return false;
-            }
+    if (filaFutura > filaActual  && columnaFutura == columnaActual) {
+        for(var f=filaActual;f <= filaFutura;f++){
+          if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
+            return false;
+          }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador1" ){
+            return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      
           }
-        } 
-        return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
+        }
       }
-
+ 
     
 //================================
 //jugador2
 //================================        
       case "jugador2":
-          if(filaFutura > filaActual  || columnaFutura != columnaActual || filaFutura === filaActual){
-          return false;
-        } else {
-  
-          if(matriz[filaFutura][columnaActual].permiso != 'jugador2'){
-            for (var f = filaActual - 1; f >= filaFutura; f--) {
-              if(matriz[f][columnaActual].id != "" && matriz[filaFutura][columnaActual].permiso != 'jugador1'){
-                return false;
-              }
-            }
+      if (filaFutura < filaActual  && columnaFutura == columnaActual) {
+        for(var f=filaActual;f >= filaFutura;f--){
+          if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
+            return false;
+          }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador2" ){
+            return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      
           }
-         return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
-       }
+        }
+      }
       }    
     }
 //===================================================================================================================//
@@ -286,12 +277,12 @@ Alfil(filaActual: number, columnaActual: number, filaFutura: number, columnaFutu
         fila = fila + 1;
         for(var c=0;c<9;c++){
           if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-            console.log("fila "+fila+" columna "+columna);
-            console.log("hay una ficha adelante, diagonal izq adelante");
-            console.log(matriz[fila][columna].permiso);
+            // console.log("fila "+fila+" columna "+columna);
+            // console.log("hay una ficha adelante, diagonal izq adelante");
+            // console.log(matriz[fila][columna].permiso);
             return false;
           }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador1"){
-            console.log("diagonal izq adelante");
+            // console.log("diagonal izq adelante");
             return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
           }
         }
@@ -313,17 +304,17 @@ Alfil(filaActual: number, columnaActual: number, filaFutura: number, columnaFutu
       for(var f=0;f<9;f++){
         columna = columna + 1
         fila = fila + 1;
-        console.log("fila "+fila);
-        console.log("columna "+columna);
+        // console.log("fila "+fila);
+        // console.log("columna "+columna);
         for(var c=0;c<9;c++){
           if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-            console.log("hay una ficha adelante, diagonal derecha adelante");
-            console.log("f "+fila);
-            console.log("c "+columna);
-            console.log(matriz[fila][columna]);
+            // console.log("hay una ficha adelante, diagonal derecha adelante");
+            // console.log("f "+fila);
+            // console.log("c "+columna);
+            // console.log(matriz[fila][columna]);
             return false;
           }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador1"){
-            console.log("diagonal derecha adelante");
+            // console.log("diagonal derecha adelante");
             return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
           }
         }
@@ -346,14 +337,14 @@ Alfil(filaActual: number, columnaActual: number, filaFutura: number, columnaFutu
       for(var f=0;f<9;f++){
         columna = columna + 1;
         fila = fila - 1;
-        console.log("fila "+fila);
-        console.log("columna "+columna);
+        // console.log("fila "+fila);
+        // console.log("columna "+columna);
         for(var c=0;c<9;c++){
           if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-            console.log("hay una ficha adelante, diagonal columna dercha atras");
+            // console.log("hay una ficha adelante, diagonal columna dercha atras");
             return false;
           }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador1"){
-            console.log("diagonal columna dercha atras");
+            // console.log("diagonal columna dercha atras");
             return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
           }
         }
@@ -376,15 +367,15 @@ Alfil(filaActual: number, columnaActual: number, filaFutura: number, columnaFutu
         for(var f=0;f<9;f++){
           columna = columna - 1
           fila = fila - 1;
-          console.log("fila "+fila);
-          console.log("columna "+columna);
+          // console.log("fila "+fila);
+          // console.log("columna "+columna);
           for(var c=0;c<9;c++){
             if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) &&
               (fila != filaFutura && columna != columnaFutura)){
-              console.log("hay una ficha adelante, diagonal columna izq atras");
+              // console.log("hay una ficha adelante, diagonal columna izq atras");
               return false;
             }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador1"){
-              console.log("diagonal columna izq atras");
+              // console.log("diagonal columna izq atras");
               return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
             }
           }
@@ -414,11 +405,11 @@ Alfil(filaActual: number, columnaActual: number, filaFutura: number, columnaFutu
           fila = fila + 1;
           for(var c=0;c<9;c++){
             if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-              console.log("fila "+fila+" columna "+columna);
-              console.log("hay una ficha adelante, diagonal izq atras rikito");
+              // console.log("fila "+fila+" columna "+columna);
+              // console.log("hay una ficha adelante, diagonal izq atras");
               return false;
             }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador2"){
-              console.log("diagonal izq atras rikito");
+              // console.log("diagonal izq atras");
               return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
             }
           }
@@ -441,17 +432,17 @@ Alfil(filaActual: number, columnaActual: number, filaFutura: number, columnaFutu
           for(var f=0;f<9;f++){
             columna = columna + 1
             fila = fila + 1;
-          console.log("fila "+fila);
-          console.log("columna "+columna);
+          // console.log("fila "+fila);
+          // console.log("columna "+columna);
           for(var c=0;c<9;c++){
             if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-              console.log("hay una ficha adelante, diagonal derecha atras rikito");
-              console.log("f "+fila);
-              console.log("c "+columna);
-              console.log(matriz[fila][columna]);
+              // console.log("hay una ficha adelante, diagonal derecha atras");
+              // console.log("f "+fila);
+              // console.log("c "+columna);
+              // console.log(matriz[fila][columna]);
               return false;
             }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador2"){
-              console.log("diagonal derecha atras rikito");
+              // console.log("diagonal derecha atras");
               return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
             }
           }
@@ -473,14 +464,14 @@ Alfil(filaActual: number, columnaActual: number, filaFutura: number, columnaFutu
         for(var f=0;f<9;f++){
           columna = columna + 1;
           fila = fila - 1;
-          console.log("fila "+fila);
-          console.log("columna "+columna);
+          // console.log("fila "+fila);
+          // console.log("columna "+columna);
           for(var c=0;c<9;c++){
             if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-              console.log("hay una ficha adelante, diagonal columna dercha delante rikito");
+              // console.log("hay una ficha adelante, diagonal columna dercha delante");
               return false;
             }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador2"){
-              console.log("diagonal columna dercha delante rikito");
+              // console.log("diagonal columna dercha delante");
               return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
             }
           }
@@ -502,14 +493,14 @@ Alfil(filaActual: number, columnaActual: number, filaFutura: number, columnaFutu
           for(var f=0;f<9;f++){
             columna = columna - 1
             fila = fila - 1;
-            console.log("fila "+fila);
-            console.log("columna "+columna);
+            // console.log("fila "+fila);
+            // console.log("columna "+columna);
             for(var c=0;c<9;c++){
               if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-                console.log("hay una ficha adelante, diagonal columna izq delante");
+                // console.log("hay una ficha adelante, diagonal columna izq delante");
                 return false;
               }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador2"){
-                console.log("diagonal columna izq delante");
+                // console.log("diagonal columna izq delante");
                 return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
               }
             }
@@ -544,12 +535,12 @@ AlfilPromocionado(filaActual: number, columnaActual: number, filaFutura: number,
       fila = fila + 1;
     for(var c=0;c<9;c++){
       if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-        console.log("fila "+fila+" columna "+columna);
-        console.log("hay una ficha adelante, diagonal izq adelante");
-        console.log(matriz[fila][columna].permiso);
+        // console.log("fila "+fila+" columna "+columna);
+        // console.log("hay una ficha adelante, diagonal izq adelante");
+        // console.log(matriz[fila][columna].permiso);
         return false;
       }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador1"){
-        console.log("diagonal izq adelante");
+        // console.log("diagonal izq adelante");
         return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
       }
     }
@@ -571,17 +562,16 @@ AlfilPromocionado(filaActual: number, columnaActual: number, filaFutura: number,
   for(var f=0;f<9;f++){
     columna = columna + 1
     fila = fila + 1;
-    console.log("fila "+fila);
-    console.log("columna "+columna);
+    
     for(var c=0;c<9;c++){
       if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-        console.log("hay una ficha adelante, diagonal derecha adelante");
-        console.log("f "+fila);
-        console.log("c "+columna);
-        console.log(matriz[fila][columna]);
+        // console.log("hay una ficha adelante, diagonal derecha adelante");
+        // console.log("f "+fila);
+        // console.log("c "+columna);
+        // console.log(matriz[fila][columna]);
         return false;
       }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador1"){
-        console.log("diagonal derecha adelante");
+        // console.log("diagonal derecha adelante");
         return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
       }
     }
@@ -604,14 +594,13 @@ AlfilPromocionado(filaActual: number, columnaActual: number, filaFutura: number,
   for(var f=0;f<9;f++){
     columna = columna + 1;
     fila = fila - 1;
-    console.log("fila "+fila);
-    console.log("columna "+columna);
+   
     for(var c=0;c<9;c++){
       if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-        console.log("hay una ficha adelante, diagonal columna dercha atras");
+        // console.log("hay una ficha adelante, diagonal columna dercha atras");
         return false;
       }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador1"){
-        console.log("diagonal columna dercha atras");
+        // console.log("diagonal columna dercha atras");
         return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
       }
     }
@@ -634,14 +623,14 @@ AlfilPromocionado(filaActual: number, columnaActual: number, filaFutura: number,
   for(var f=0;f<9;f++){
     columna = columna - 1
     fila = fila - 1;
-    console.log("fila "+fila);
-    console.log("columna "+columna);
+    // console.log("fila "+fila);
+    // console.log("columna "+columna);
     for(var c=0;c<9;c++){
       if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-        console.log("hay una ficha adelante, diagonal columna izq atras");
+        // console.log("hay una ficha adelante, diagonal columna izq atras");
         return false;
       }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador1"){
-        console.log("diagonal columna izq atras");
+        // console.log("diagonal columna izq atras");
         return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
       }
     }
@@ -691,11 +680,11 @@ else{
         fila = fila + 1;
         for(var c=0;c<9;c++){
           if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-            console.log("fila "+fila+" columna "+columna);
-            console.log("hay una ficha adelante, diagonal izq atras rikito");
+            // console.log("fila "+fila+" columna "+columna);
+            // console.log("hay una ficha adelante, diagonal izq atras");
             return false;
           }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador2"){
-            console.log("diagonal izq atras rikito");
+            // console.log("diagonal izq atras ");
             return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
         }
       }
@@ -717,17 +706,17 @@ else{
       for(var f=0;f<9;f++){
         columna = columna + 1
         fila = fila + 1;
-        console.log("fila "+fila);
-        console.log("columna "+columna);
+        // console.log("fila "+fila);
+        // console.log("columna "+columna);
         for(var c=0;c<9;c++){
           if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-            console.log("hay una ficha adelante, diagonal derecha atras rikito");
-            console.log("f "+fila);
-            console.log("c "+columna);
-            console.log(matriz[fila][columna]);
+            // console.log("hay una ficha adelante, diagonal derecha atras ");
+            // console.log("f "+fila);
+            // console.log("c "+columna);
+            // console.log(matriz[fila][columna]);
             return false;
           }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador2"){
-            console.log("diagonal derecha atras rikito");
+            // console.log("diagonal derecha atras ");
             return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
           }
         }
@@ -749,14 +738,14 @@ else{
       for(var f=0;f<9;f++){
         columna = columna + 1;
         fila = fila - 1;
-        console.log("fila "+fila);
-        console.log("columna "+columna);
+        // console.log("fila "+fila);
+        // console.log("columna "+columna);
         for(var c=0;c<9;c++){
           if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-            console.log("hay una ficha adelante, diagonal columna dercha delante rikito");
+            // console.log("hay una ficha adelante, diagonal columna dercha delante");
             return false;
           }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador2"){
-            console.log("diagonal columna dercha delante rikito");
+            // console.log("diagonal columna dercha delante ");
             return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
           }
         }
@@ -778,14 +767,14 @@ else{
         for(var f=0;f<9;f++){
           columna = columna - 1
           fila = fila - 1;
-          console.log("fila "+fila);
-          console.log("columna "+columna);
+          // console.log("fila "+fila);
+          // console.log("columna "+columna);
           for(var c=0;c<9;c++){
             if(matriz[fila][columna].id != "" && ((fila!=filaActual)&&(columna != columnaActual)) && (fila != filaFutura && columna != columnaFutura)){
-              console.log("hay una ficha adelante, diagonal columna izq delante");
+              // console.log("hay una ficha adelante, diagonal columna izq delante");
               return false;
             }else if(fila === filaFutura && columna === columnaFutura && matriz[fila][columna].permiso != "jugador2"){
-              console.log("diagonal columna izq delante");
+              // console.log("diagonal columna izq delante");
               return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);
             }
           }
@@ -822,9 +811,9 @@ Torre(filaActual: number,columnaActual: number, filaFutura: number, columnaFutur
       //recorre sobre las filas solamente
     if(filaFutura < filaActual  && columnaFutura == columnaActual ){
       for(var f=filaActual;f>=0;f--){
-        console.log("fila"+f);
+        // console.log("fila"+f);
         if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
-          console.log("no se puede");
+          // console.log("no se puede");
           return false;
         }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador1" ){
           return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      
@@ -832,9 +821,9 @@ Torre(filaActual: number,columnaActual: number, filaFutura: number, columnaFutur
       }
     }else if (filaFutura > filaActual  && columnaFutura == columnaActual) {
       for(var f=filaActual;f<=filaFutura;f++){
-        console.log("fila"+f);
+        // console.log("fila"+f);
         if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
-          console.log("no se puede");
+          // console.log("no se puede");
           return false;
         }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador1" ){
           return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      
@@ -872,9 +861,9 @@ Torre(filaActual: number,columnaActual: number, filaFutura: number, columnaFutur
     //recorre sobre las filas solamente
     if(filaFutura < filaActual  && columnaFutura == columnaActual ){
       for(var f=filaActual;f>=0;f--){
-        console.log("fila"+f);
+        // console.log("fila"+f);
         if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
-          console.log("no se puede");
+          // console.log("no se puede");
           return false;
         }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador2" ){
           return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      
@@ -882,9 +871,9 @@ Torre(filaActual: number,columnaActual: number, filaFutura: number, columnaFutur
       }
     }else if (filaFutura > filaActual  && columnaFutura == columnaActual) {
       for(var f=filaActual;f<=filaFutura;f++){
-        console.log("fila"+f);
+        // console.log("fila"+f);
         if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
-          console.log("no se puede");
+          // console.log("no se puede");
           return false;
         }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador2" ){
           return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      
@@ -924,9 +913,9 @@ TorrePromocionada(filaActual: number,columnaActual: number, filaFutura: number, 
         //recorre sobre las filas solamente
         if(filaFutura < filaActual  && columnaFutura == columnaActual ){
           for(var f=filaActual;f>=0;f--){
-            console.log("fila"+f);
+            // console.log("fila"+f);
             if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
-              console.log("no se puede");
+              // console.log("no se puede");
               return false;
             }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador1" ){
               return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      
@@ -934,9 +923,9 @@ TorrePromocionada(filaActual: number,columnaActual: number, filaFutura: number, 
           }
         }else if (filaFutura > filaActual  && columnaFutura == columnaActual) {
           for(var f=filaActual;f<=filaFutura;f++){
-            console.log("fila"+f);
+            // console.log("fila"+f);
             if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
-              console.log("no se puede");
+              // console.log("no se puede");
               return false;
             }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador1" ){
               return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      
@@ -980,9 +969,9 @@ TorrePromocionada(filaActual: number,columnaActual: number, filaFutura: number, 
      //recorre sobre las filas solamente
       if(filaFutura < filaActual  && columnaFutura == columnaActual ){
         for(var f=filaActual;f>=0;f--){
-          console.log("fila"+f);
+          // console.log("fila"+f);
           if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
-            console.log("no se puede");
+            // console.log("no se puede");
              return false;
          }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador2" ){
           return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      
@@ -990,9 +979,9 @@ TorrePromocionada(filaActual: number,columnaActual: number, filaFutura: number, 
       }
     }else if (filaFutura > filaActual  && columnaFutura == columnaActual) {
       for(var f=filaActual;f<=filaFutura;f++){
-        console.log("fila"+f);
+        // console.log("fila"+f);
         if(matriz[f][columnaActual].id != "" && (filaFutura != f) && (filaActual != f)){
-          console.log("no se puede");
+          // console.log("no se puede");
           return false;
         }else if(filaFutura === f && matriz[f][columnaActual].permiso != "jugador2" ){
           return this._CapturarService.Capturar(ficha,jugador,capjug1,capjug2);      

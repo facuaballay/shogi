@@ -10,7 +10,6 @@ export class TableroComponent implements OnInit {
 
   matriz :Array<any>;
  
-
   constructor(public _TableroService:TableroService) { 
 
     this.matriz = _TableroService.CrearTablero();

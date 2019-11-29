@@ -6,7 +6,9 @@ export class Promociones{
     public Lanceropromocionado: boolean ,
     public Caballopromocionado:boolean ,
     public Alfilpromocionado :boolean,
-    public Torrepromocionada:boolean 
+    public Torrepromocionada:boolean,
+   
+    
       
     ){
 
