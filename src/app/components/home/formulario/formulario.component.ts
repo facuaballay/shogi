@@ -59,7 +59,7 @@ export class FormularioComponent implements OnInit {
 
 //========================================= lugar ============================================//
 //Mueve la Ficha 
-onMover(ficha: string, lugar: string,f) {
+onMover(ficha: string, lugar: string) {
     //devuelve un true
     let sePuede = this.sePuede(ficha, lugar);
     if (sePuede) {

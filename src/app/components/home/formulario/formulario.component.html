@@ -12,7 +12,7 @@
     <ul *ngIf="jugador === 'jugador2'" >
       <li *ngFor="let jug2 of capjug2"> {{jug2.id}}-{{jug2.nombre}} </li>
     </ul>
-    <form ngNativeValidate class="row" #f="ngForm" (ngSubmit)="ReintroducirPiezas(fichanueva.value,nuevolugar.value ); " >
+    <form ngNativeValidate class="row" #f="ngForm" (ngSubmit)="ReintroducirPiezas(fichanueva.value,nuevolugar.value ); f.reset(); " >
       <div class="form-group">
         <input  class="form-control  " maxlength="2"   #fichanueva ngModel name="idFicha"  type="text" digitOnly placeholder="ID ficha" required  >
         <small class="form-text text-muted">Escriba El ID de la ficha</small>
