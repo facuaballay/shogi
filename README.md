@@ -14,7 +14,9 @@ npm Install
 
 ## Intrucciones
 1.correr el npm install
+
 2.Configurar sweet alert:
+
 entrar a la carpeta :  Node_modules/sweetalert/sweetalert.d.ts
 y remplazar el contenido:
  
