@@ -11,7 +11,8 @@ npm Install
 - movimiento de piezas promocionadas
 - re introducir piezas capturadas
 - jaque mate
-##Intrucciones
+
+## Intrucciones
 1.correr el npm install
 2.Configurar sweet alert:
 entrar a la carpeta :Node_modules/sweetalert/sweetalert.d.ts
