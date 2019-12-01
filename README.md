@@ -31,6 +31,7 @@ declare global {
 export default swal;
 
 ## Funcionalidades implementadas
+- implementaciones gráficas
 - movimiento de piezas segun las reglas.
 - movimiento de piezas promocionadas segun las reglas.
 - re introducir piezas capturadas y si es una pieza promocionada le saca su promocion.
