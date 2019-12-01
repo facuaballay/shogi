@@ -6,13 +6,11 @@ Este shogi esta hecho Angular version 8.1.2.
 
 npm Install
 
-## Funcionalidades implementadas
-- movimiento de piezas
-- movimiento de piezas promocionadas
-- re introducir piezas capturadas
-- jaque mate
+## Desplegar el proyecto en angular
 
-## Intrucciones
+ng serve
+
+## Instrucciones
 1.correr el npm install
 
 2.Configurar sweet alert:
@@ -30,10 +28,13 @@ declare global {
   
 }
 
-
-
 export default swal;
 
+## Funcionalidades implementadas
+- movimiento de piezas segun las reglas.
+- movimiento de piezas promocionadas segun las reglas.
+- re introducir piezas capturadas y si es una pieza promocionada le saca su promocion.
+- jaque mate
 
 
 
